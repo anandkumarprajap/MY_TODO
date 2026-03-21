@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{% block title %}Todo App{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <header>
+
+        <h1>My To-Do App</h1>
+
+        <nav>
+
+            <a href="{{ url_for('tasks.task_list') }}">Home</a>
+
+            {% if 'user' in session %}
+            <a href="{{ url_for('auth.logout') }}">Logout</a>
+            {% else %}
+            <a href="{{ url_for('auth.login') }}">Login</a>
+            {% endif %}
+
+        </nav>
+
+    </header>
+
+    <div class="container">
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category,message in messages %}
+
+        <p class="{{category}}">{{message}}</p>
+
+        {% endfor %}
+        {% endwith %}
+
+        {% block content %}
+
+        {% endblock %}
+
+    </div>
+<footer class="footer">
+
+    <p>&copy; 2024 My To-Do App</p>
+
+</footer>
+
+
+</body>
+
+</html>
